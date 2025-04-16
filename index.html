@@ -3,25 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slot Gambling Game</title>
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <title>Lucky Slots Casino</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-    
-    <div class="w-screen h-screen flex items-center justify-center bg-gray-200">
-        <canvas id="canvas" class="w-1/2 h-1/2 bg-white shadow-lg rounded-lg flex flex-col items-center justify-center">
-            <!-- Navbar -->
-            <div>Navbar</div>
+<body class="bg-gray-100 transition-colors duration-300" id="body">
+    <!-- Main Container -->
+    <div class="min-h-screen flex flex-col">
+        <!-- Login/Register Section -->
+        <div id="auth-container" class="w-full h-screen flex items-center justify-center p-4">
+            <div class="w-full border-black border max-w-md bg-white rounded-lg shadow-lg overflow-hidden">
+                <!-- Auth Tabs -->
+                <div class="flex border-b">
+                    <button id="login-tab" class="w-1/2 py-3 font-medium text-center text-gray-800 bg-gray-100 border-r border-black border-b">Login</button>
+                    <button id="register-tab" class="w-1/2 py-3 font-medium text-center text-gray-500 border-black border-b">Register</button>
+                </div>
+                
+                <!-- Login Form -->
+                <div id="login-form" class="p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Welcome Back!</h2>
+                    <div id="login-error" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert"></div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="login-username">Username</label>
+                        <input id="login-username" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter username">
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="login-password">Password</label>
+                        <input id="login-password" type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter password">
+                    </div>
+                    
+                    <button id="login-button" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-300">
+                        Login
+                    </button>
+                </div>
+                
+                <!-- Register Form -->
+                <div id="register-form" class="p-6 hidden">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Create Account</h2>
+                    <div id="register-error" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert"></div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="register-username">Username</label>
+                        <input id="register-username" type="text" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Choose username">
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="register-password">Password</label>
+                        <input id="register-password" type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Choose password">
+                        <p class="text-xs text-gray-500 mt-1">Password must be at least 6 characters</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="register-confirm">Confirm Password</label>
+                        <input id="register-confirm" type="password" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Confirm password">
+                    </div>
+                    
+                    <button id="register-button" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-colors duration-300">
+                        Create Account
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Game Page -->
+        <div id="game-container" class="hidden flex-grow flex flex-col">
+            <!-- Header -->
+            <header class="bg-purple-800 py-1 border-pink-500 border-b shadow-md transition-colors duration-300" id="header">
+                <div class="container relative mx-auto px-4 py-4 flex justify-between items-center">
+                    <h1 class="text-lg md:text-2xl font-bold text-white gap-4 flex items-center cursor-pointer">
+                        <!-- <i class="fas fa-dice mr-2"></i> -->
+                         <img src="./images/logo5.png" alt="Logo" class="w-24 h-24 -left-2 md:-left-6 absolute">
+                        <span class="sm:block hidden pl-20 md:pl-14">King of Slots</span>
+                    </h1>
+                    
+                    <div class="flex items-center space-x-2">
+                        <div class="ml-2 bg-purple-500/50 hover:bg-purple-500 px-4 py-2 rounded-full text-white font-bold">
+                            <span class="text-sm md:text-md">Credits: </span>
+                            $<span id="balance-display text-sm md:text-lg">1000</span>
+                        </div>
+                        
+                        <button id="logout-button" class="bg-purple-500 hover:bg-purple-600 text-white px-3 py-2 rounded-md text-sm transition-colors duration-300">
+                            <span class="hidden md:inline mr-1">Logout</span>
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
 
-            <!-- Slot/Main area -->
-            <div>Slot Machine</div>
+            <!-- Main Content -->
+            <main class="flex-grow container mx-auto px-4 py-6">
+                Game Area
+                <canvas></canvas>
+            </main>
 
-            <!-- Spin, Setting Button etc.. -->
-            <div>Spin Button</div>
-        <!-- </canvas> -->
+        </div>
     </div>
-
-
+    
     <script src="./script.js"></script>
 </body>
 </html>
