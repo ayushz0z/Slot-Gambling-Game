@@ -48,10 +48,11 @@ registerTab.addEventListener('click', () => {
     registerError.classList.add('hidden');
 });
 
-// Login functionality
 loginButton.addEventListener('click', () => {
-    const username = $('login-username').value;
-    const password = $('login-password').value;
+    const usernameInput = $('login-username');
+    const passwordInput = $('login-password');
+    const username = usernameInput.value;
+    const password = passwordInput.value;
     
     if (!username || !password) {
         showError(loginError, 'Please enter both username and password');
@@ -69,14 +70,19 @@ loginButton.addEventListener('click', () => {
     gameState.currentUser = username;
     updateGameStateFromStorage();
     localStorage.setItem('casinoCurrentUser', username);
+    usernameInput.value = "";
+    passwordInput.value = "";
     showGameInterface();
 });
 
 // Register functionality
 registerButton.addEventListener('click', () => {
-    const username = $('register-username').value;
-    const password = $('register-password').value;
-    const confirm = $('register-confirm').value;
+    const usernameInput = $('register-username');
+    const passwordInput = $('register-password');
+    const confirmInput = $('register-confirm');
+    const username = usernameInput.value;
+    const password = passwordInput.value;
+    const confirm = confirmInput.value;
     
     if (!username || !password || !confirm) {
         showError(registerError, 'Please fill in all fields');
@@ -112,6 +118,9 @@ registerButton.addEventListener('click', () => {
     // Auto login
     gameState.currentUser = username;
     localStorage.setItem('casinoCurrentUser', username);
+    usernameInput.value = "";
+    passwordInput.value = "";
+    confirmInput.value = "";
     showGameInterface();
 });
 
@@ -127,6 +136,11 @@ logoutButton.addEventListener('click', () => {
 function showError(element, message) {
     element.textContent = message;
     element.classList.remove('hidden');
+    
+    // Remove the error message after 3 seconds
+    setTimeout(() => {
+        element.classList.add('hidden');
+    }, 3000);
 }
 
 // =====================
